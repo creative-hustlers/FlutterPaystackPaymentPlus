@@ -96,8 +96,8 @@ class SuccessfulWidgetState extends State<SuccessfulWidget>
           widget.amount.isNegative
               ? Container()
               : Text('You paid ${Utils.formatAmount(widget.amount)}',
-                  style: const TextStyle(
-                    color: Colors.black54,
+                  style:  TextStyle(
+                    color: Theme.of(context).textTheme.bodyLarge!.color,
                     fontWeight: FontWeight.normal,
                     fontSize: 14.0,
                   )),

@@ -176,9 +176,9 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget> with TickerProvider
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Text(
+               Text(
                 'Pay',
-                style: TextStyle(fontSize: 14.0, color: Colors.black54),
+                style: TextStyle(fontSize: 14.0, color: Theme.of(context).textTheme.bodyLarge!.color),
               ),
               const SizedBox(
                 width: 5.0,
@@ -236,7 +236,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget> with TickerProvider
         child: TabBar(
           controller: _tabController,
           isScrollable: true,
-          unselectedLabelColor: Colors.black54,
+          unselectedLabelColor: Theme.of(context).textTheme.bodyLarge!.color,
           labelColor: accentColor,
           labelStyle: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
           indicator: ShapeDecoration(
