@@ -82,10 +82,10 @@ class SuccessfulWidgetState extends State<SuccessfulWidget>
             package: 'flutter_paystack_payment_plus',
           ),
           sizedBox,
-          const Text(
+           Text(
             'Payment Successful',
             style: TextStyle(
-              color: Colors.black87,
+              color:  Theme.of(context).textTheme.bodyLarge!.color,
               fontWeight: FontWeight.w500,
               fontSize: 16.0,
             ),

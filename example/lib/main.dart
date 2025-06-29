@@ -383,8 +383,7 @@ class _HomePageState extends State<HomePage> {
         ..card = _getCardFromUI()
         ..reference = "AdeFlutterwave-${DateTime.now().millisecondsSinceEpoch}";
 
-      charge.addParameter("key", "value");
-
+      charge.putMetaData("test_title", "test_value");
       CheckoutResponse response = await plugin.checkout(
         context!,
         method: CheckoutMethod.card,
