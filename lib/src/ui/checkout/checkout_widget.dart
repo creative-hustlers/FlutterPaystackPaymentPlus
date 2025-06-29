@@ -158,7 +158,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget> with TickerProvider
   }
 
   Widget _buildTitle() {
-    final accentColor = Theme.of(context).colorScheme.secondary;
+    final accentColor = Theme.of(context).colorScheme.primary;
     var emailAndAmount = Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[

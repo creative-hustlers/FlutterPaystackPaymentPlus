@@ -46,7 +46,7 @@ class _PinFieldState extends State<PinField> {
               borderSide: BorderSide(color: Colors.grey, width: 0.5)),
           focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.secondary, width: 1.0)),
+                  color: Theme.of(context).colorScheme.primary, width: 1.0)),
         ),
         onChanged: (String value) {
           if (value.length == widget.pinLength) {

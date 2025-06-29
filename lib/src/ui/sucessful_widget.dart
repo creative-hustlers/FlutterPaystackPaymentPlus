@@ -68,7 +68,7 @@ class SuccessfulWidgetState extends State<SuccessfulWidget>
 
   @override
   Widget build(BuildContext context) {
-    final accentColor = Theme.of(context).colorScheme.secondary;
+    final accentColor = Theme.of(context).colorScheme.primary;
     return CustomAnimatedWidget(
       controller: _mainController,
       child: Column(
