@@ -44,8 +44,7 @@ class CheckoutWidget extends StatefulWidget {
   _CheckoutWidgetState createState() => _CheckoutWidgetState(charge);
 }
 
-class _CheckoutWidgetState extends BaseState<CheckoutWidget>
-    with TickerProviderStateMixin {
+class _CheckoutWidgetState extends BaseState<CheckoutWidget> with TickerProviderStateMixin {
   static const tabBorderRadius = BorderRadius.all(Radius.circular(4.0));
   final Charge _charge;
   int? _currentIndex = 0;
@@ -67,10 +66,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget>
     _initPaymentMethods();
     _currentIndex = _getCurrentTab();
     _showTabs = widget.method == CheckoutMethod.selectable ? true : false;
-    _tabController = TabController(
-        vsync: this,
-        length: _methodWidgets.length,
-        initialIndex: _currentIndex!);
+    _tabController = TabController(vsync: this, length: _methodWidgets.length, initialIndex: _currentIndex!);
     _tabController!.addListener(_indexChange);
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 500),
@@ -124,6 +120,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget>
               ),
             Image.asset(
               'assets/images/paystack.png',
+              color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
               key: const Key("PaystackLogo"),
               package: 'flutter_paystack_payment_plus',
               height: 15,
@@ -143,8 +140,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget>
           onTap: () => FocusScope.of(context).unfocus(),
           behavior: HitTestBehavior.translucent,
           child: Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
               child: Column(
                 children: <Widget>[
                   _showProcessingError()
@@ -189,10 +185,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget>
               ),
               Flexible(
                   child: Text(Utils.formatAmount(_charge.amount),
-                      style: TextStyle(
-                          fontSize: 15.0,
-                          color: Theme.of(context).textTheme.bodyLarge!.color,
-                          fontWeight: FontWeight.w500)))
+                      style: TextStyle(fontSize: 15.0, color: Theme.of(context).textTheme.bodyLarge!.color, fontWeight: FontWeight.w500)))
             ],
           )
       ],
@@ -245,8 +238,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget>
           isScrollable: true,
           unselectedLabelColor: Colors.black54,
           labelColor: accentColor,
-          labelStyle:
-              const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
+          labelStyle: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
           indicator: ShapeDecoration(
             shape: RoundedRectangleBorder(
                   borderRadius: tabBorderRadius,
@@ -322,9 +314,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget>
 
   void _onProcessingChange(bool processing) {
     setState(() {
-      _tabHeight = processing || _paymentSuccessful || _showProcessingError()
-          ? 0.0
-          : kFullTabHeight;
+      _tabHeight = processing || _paymentSuccessful || _showProcessingError() ? 0.0 : kFullTabHeight;
       processing = processing;
     });
   }
@@ -383,7 +373,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget>
     return ErrorWidget(
       text: _paymentError,
       method: widget.method,
-      isCardPayment: _charge.card!.isValid(),
+      isCardPayment: widget.method == CheckoutMethod.card,
       vSync: this,
       payWithBank: () {
         setState(() {
@@ -429,9 +419,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget>
     CheckoutResponse? response = _response;
     if (response == null) {
       response = CheckoutResponse.defaults();
-      response.method = _tabController!.index == 0
-          ? CheckoutMethod.card
-          : CheckoutMethod.bank;
+      response.method = _tabController!.index == 0 ? CheckoutMethod.card : CheckoutMethod.bank;
     }
     if (response.card != null) {
       response.card!.nullifyNumber();

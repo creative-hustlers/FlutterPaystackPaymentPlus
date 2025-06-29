@@ -30,8 +30,8 @@ class MyApp extends StatefulWidget {
 
   @override
   State<MyApp> createState() => _MyAppState();
-  static _MyAppState of(BuildContext context) =>
-      context.findAncestorStateOfType<_MyAppState>()!;
+
+  static _MyAppState of(BuildContext context) => context.findAncestorStateOfType<_MyAppState>()!;
 }
 
 class _MyAppState extends State<MyApp> {
@@ -39,7 +39,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appName,
-      themeMode: _themeMode, // 2) ← ← ← use "state" field here //////////////
+      themeMode: _themeMode,
+      // 2) ← ← ← use "state" field here //////////////
       theme: ThemeClass.lightTheme,
       darkTheme: ThemeClass.darkTheme,
       home: HomePage(),
@@ -89,8 +90,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    plugin.initialize(
-        publicKey: "pk_test_d414d44d2854017d8ac18ec5ccf03d276bbb92af");
+    plugin.initialize(publicKey: "pk_test_d414d44d2854017d8ac18ec5ccf03d276bbb92af");
     check = isDarkMode;
     super.initState();
   }
@@ -115,22 +115,20 @@ class _HomePageState extends State<HomePage> {
                       child: Text('Initalize transaction from:'),
                     ),
                     Expanded(
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            RadioListTile<int>(
-                              value: 0,
-                              groupValue: _radioValue,
-                              onChanged: _handleRadioValueChanged,
-                              title: const Text('Local'),
-                            ),
-                            RadioListTile<int>(
-                              value: 1,
-                              groupValue: _radioValue,
-                              onChanged: _handleRadioValueChanged,
-                              title: const Text('Server'),
-                            ),
-                          ]),
+                      child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                        RadioListTile<int>(
+                          value: 0,
+                          groupValue: _radioValue,
+                          onChanged: _handleRadioValueChanged,
+                          title: const Text('Local'),
+                        ),
+                        RadioListTile<int>(
+                          value: 1,
+                          groupValue: _radioValue,
+                          onChanged: _handleRadioValueChanged,
+                          title: const Text('Server'),
+                        ),
+                      ]),
                     )
                   ],
                 ),
@@ -164,8 +162,7 @@ class _HomePageState extends State<HomePage> {
                           border: UnderlineInputBorder(),
                           labelText: 'Expiry Month',
                         ),
-                        onSaved: (String? value) =>
-                            _expiryMonth = int.tryParse(value ?? ""),
+                        onSaved: (String? value) => _expiryMonth = int.tryParse(value ?? ""),
                       ),
                     ),
                     _horizontalSizeBox,
@@ -175,8 +172,7 @@ class _HomePageState extends State<HomePage> {
                           border: UnderlineInputBorder(),
                           labelText: 'Expiry Year',
                         ),
-                        onSaved: (String? value) =>
-                            _expiryYear = int.tryParse(value ?? ""),
+                        onSaved: (String? value) => _expiryYear = int.tryParse(value ?? ""),
                       ),
                     )
                   ],
@@ -186,11 +182,8 @@ class _HomePageState extends State<HomePage> {
                   data: Theme.of(context).copyWith(
                     primaryColorLight: Colors.white,
                     primaryColorDark: navyBlue,
-                    textTheme: Theme.of(context).textTheme.copyWith(
-
-                        ),
-                    colorScheme:
-                        ColorScheme.fromSwatch().copyWith(secondary: green),
+                    textTheme: Theme.of(context).textTheme.copyWith(),
+                    colorScheme: ColorScheme.fromSwatch().copyWith(secondary: green),
                   ),
                   child: Builder(
                     builder: (context) {
@@ -207,16 +200,14 @@ class _HomePageState extends State<HomePage> {
                           : Column(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
-                                _getPlatformButton(
-                                    'Charge Card', () => _startAfreshCharge()),
+                                _getPlatformButton('Charge Card', () => _startAfreshCharge()),
                                 _verticalSizeBox,
                                 _border,
                                 const SizedBox(
                                   height: 40.0,
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     Flexible(
@@ -237,10 +228,8 @@ class _HomePageState extends State<HomePage> {
                                               }
                                             },
                                             items: banks.map((String value) {
-                                              return DropdownMenuItem<
-                                                  CheckoutMethod>(
-                                                value:
-                                                    _parseStringToMethod(value),
+                                              return DropdownMenuItem<CheckoutMethod>(
+                                                value: _parseStringToMethod(value),
                                                 child: Text(value),
                                               );
                                             }).toList(),
@@ -271,17 +260,23 @@ class _HomePageState extends State<HomePage> {
                                         check = !check;
                                       });
                                       if (!check) {
-                                        MyApp.of(context)
-                                            .changeTheme(ThemeMode.light);
+                                        MyApp.of(context).changeTheme(ThemeMode.light);
                                       } else {
-                                        MyApp.of(context)
-                                            .changeTheme(ThemeMode.dark);
+                                        MyApp.of(context).changeTheme(ThemeMode.dark);
                                       }
                                     }),
                               ],
                             );
                     },
                   ),
+                ),
+                _verticalSizeBox,
+                MaterialButton(
+                  onPressed: () {
+                    simplePaymemt();
+                  },
+                  shape: const RoundedRectangleBorder(side: BorderSide(color: Colors.blue)),
+                  child: const Text("Simple Payment Example"),
                 )
               ],
             ),
@@ -376,6 +371,37 @@ class _HomePageState extends State<HomePage> {
     } else {
       setState(() => _inProgress = false);
       _updateStatus(reference, response.message);
+    }
+  }
+
+  simplePaymemt() async {
+    try {
+      Charge charge = Charge()
+        ..amount = 10000 // In base currency
+        ..email = 'customer@email.com'
+        ..currency = "NGN"
+        ..card = _getCardFromUI()
+        ..reference = "AdeFlutterwave-${DateTime.now().millisecondsSinceEpoch}";
+
+      charge.addParameter("key", "value");
+
+      CheckoutResponse response = await plugin.checkout(
+        context!,
+        method: CheckoutMethod.card,
+        charge: charge,
+        hideEmail: true,
+        fullscreen: false,
+        logo: Container(),
+      );
+      print('Response = $response');
+      setState(() => _inProgress = false);
+      // _updateStatus(response.reference, '$response');
+    } catch (e, s) {
+      print(e);
+      print(s);
+      // setState(() => _inProgress = false);
+      // _showMessage("Check console for error");
+      rethrow;
     }
   }
 
@@ -499,19 +525,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   _updateStatus(String? reference, String message) {
-    _showMessage('Reference: $reference \n Response: $message',
-        const Duration(seconds: 7));
+    _showMessage('Reference: $reference \n Response: $message', const Duration(seconds: 7));
   }
 
-  _showMessage(String message,
-      [Duration duration = const Duration(seconds: 4)]) {
+  _showMessage(String message, [Duration duration = const Duration(seconds: 4)]) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
       duration: duration,
-      action: SnackBarAction(
-          label: 'CLOSE',
-          onPressed: () =>
-              ScaffoldMessenger.of(context).removeCurrentSnackBar()),
+      action: SnackBarAction(label: 'CLOSE', onPressed: () => ScaffoldMessenger.of(context).removeCurrentSnackBar()),
     ));
   }
 

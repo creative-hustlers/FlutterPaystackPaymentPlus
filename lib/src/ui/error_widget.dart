@@ -71,15 +71,15 @@ class ErrorWidget extends StatelessWidget {
                 )
               : emptyContainer,
           buttonMargin,
-          isCardPayment
-              ? WhiteButton(
-                  onPressed: startOverWithCard,
-                  text: 'Start over with same card',
-                  icondata: Icons.refresh,
-                  bold: false,
-                  flat: true,
-                )
-              : emptyContainer
+          // isCardPayment
+          //     ? WhiteButton(
+          //         onPressed: startOverWithCard,
+          //         text: 'Start over with same card',
+          //         icondata: Icons.refresh,
+          //         bold: false,
+          //         flat: true,
+          //       )
+          //     : emptyContainer
         ],
       ),
     );
