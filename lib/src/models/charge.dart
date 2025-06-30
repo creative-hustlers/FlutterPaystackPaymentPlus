@@ -24,7 +24,6 @@ class Charge {
   String? accessCode;
   String? plan;
   String? reference;
-
   /// ISO 4217 payment currency code (e.g USD). Defaults to [Strings.ngn].
   ///
   /// If you're setting this value, also set [locale] for better formatting.

@@ -20,6 +20,7 @@ class CardCheckout extends StatefulWidget {
   final bool hideAmount;
   final CardServiceContract service;
   final String publicKey;
+  final String? extraInfo;
 
   const CardCheckout({
     Key? key,
@@ -30,6 +31,7 @@ class CardCheckout extends StatefulWidget {
     required this.service,
     required this.publicKey,
     this.hideAmount = false,
+    this.extraInfo,
   }) : super(key: key);
 
   @override
@@ -39,18 +41,26 @@ class CardCheckout extends StatefulWidget {
 class _CardCheckoutState extends BaseCheckoutMethodState<CardCheckout> {
   final Charge _charge;
 
-  _CardCheckoutState(this._charge, OnResponse<CheckoutResponse> onResponse)
-      : super(onResponse, CheckoutMethod.card);
+  _CardCheckoutState(this._charge, OnResponse<CheckoutResponse> onResponse) : super(onResponse, CheckoutMethod.card);
 
   @override
   Widget buildAnimatedChild() {
-    var amountText =
-        _charge.amount.isNegative ? '' : Utils.formatAmount(_charge.amount);
-
+    var amountText = _charge.amount.isNegative ? '' : Utils.formatAmount(_charge.amount);
     return Container(
       alignment: Alignment.center,
       child: Column(
         children: <Widget>[
+          if (widget.extraInfo != null) ...[
+            Text(
+              widget.extraInfo ?? "",
+              key: Key("extraInfo"),
+              style: TextStyle(fontWeight: FontWeight.w500),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+          ],
           const Text(
             Strings.cardInputInstruction,
             key: Key("InstructionKey"),
@@ -76,8 +86,7 @@ class _CardCheckoutState extends BaseCheckoutMethodState<CardCheckout> {
     widget.onCardChange(_charge.card);
     widget.onProcessingChange(true);
 
-    if ((_charge.accessCode != null && _charge.accessCode!.isNotEmpty) ||
-        _charge.reference != null && _charge.reference!.isNotEmpty) {
+    if ((_charge.accessCode != null && _charge.accessCode!.isNotEmpty) || _charge.reference != null && _charge.reference!.isNotEmpty) {
       _chargeCard(_charge);
     } else {
       // This should never happen. Validation has already been done in [PaystackPayment .checkout]

@@ -127,6 +127,7 @@ class PaystackPayment {
     CheckoutMethod method = CheckoutMethod.selectable,
     bool fullscreen = false,
     Widget? logo,
+    String? cardCheckoutExtraInfo,
     bool hideEmail = false,
     bool hideAmount = false,
   }) async {
@@ -138,6 +139,7 @@ class PaystackPayment {
       logo: logo,
       hideAmount: hideAmount,
       hideEmail: hideEmail,
+      extraInfo: cardCheckoutExtraInfo
     );
   }
 
@@ -173,6 +175,7 @@ class _Paystack {
     bool hideEmail = false,
     bool hideAmount = false,
     Widget? logo,
+    String? extraInfo,
   }) async {
     assert(() {
       _validateChargeAndKey(charge);
@@ -205,6 +208,7 @@ class _Paystack {
         logo: logo,
         hideAmount: hideAmount,
         hideEmail: hideEmail,
+        extraInfo: extraInfo,
       ),
     );
     return response!;

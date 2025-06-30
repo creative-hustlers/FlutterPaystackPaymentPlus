@@ -26,6 +26,7 @@ class CheckoutWidget extends StatefulWidget {
   final BankServiceContract bankService;
   final CardServiceContract cardsService;
   final String publicKey;
+  final String? extraInfo;
 
   const CheckoutWidget({
     Key? key,
@@ -36,6 +37,7 @@ class CheckoutWidget extends StatefulWidget {
     required this.publicKey,
     this.fullscreen = false,
     this.logo,
+    this.extraInfo,
     this.hideEmail = false,
     this.hideAmount = false,
   }) : super(key: key);
@@ -290,6 +292,7 @@ class _CheckoutWidgetState extends BaseState<CheckoutWidget> with TickerProvider
             onProcessingChange: _onProcessingChange,
             onResponse: _onPaymentResponse,
             hideAmount: widget.hideAmount,
+            extraInfo: widget.extraInfo,
             onCardChange: (PaymentCard? card) {
               if (card == null) return;
               _charge.card!.number = card.number;

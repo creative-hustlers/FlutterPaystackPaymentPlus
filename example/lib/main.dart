@@ -380,7 +380,6 @@ class _HomePageState extends State<HomePage> {
         ..amount = 10000 // In base currency
         ..email = 'customer@email.com'
         ..currency = "NGN"
-        ..card = _getCardFromUI()
         ..reference = "AdeFlutterwave-${DateTime.now().millisecondsSinceEpoch}";
 
       charge.putMetaData("test_title", "test_value");
@@ -391,6 +390,7 @@ class _HomePageState extends State<HomePage> {
         hideEmail: true,
         fullscreen: false,
         logo: Container(),
+        cardCheckoutExtraInfo: "Test Extra Info",
       );
       print('Response = $response');
       setState(() => _inProgress = false);
