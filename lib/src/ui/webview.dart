@@ -65,7 +65,7 @@ class _WebViewState extends State<WebView> {
 
             // Execute JavaScript to get response
             controller.runJavaScriptReturningResult(
-                "document.getElementById('return')?.innerText || 'null'")
+                "document.getElementById('return')?.innerText || null")
                 .then((value) async {
               if (value.toString().isNotEmpty && value.toString() != 'null') {
                 response = value.toString();
