@@ -71,7 +71,7 @@ class _CardCheckoutState extends BaseCheckoutMethodState<CardCheckout> {
           ),
           CardInput(
             key: const Key("CardInput"),
-            buttonText: widget.hideAmount ? "Continue" : 'Pay $amountText',
+            buttonText: widget.hideAmount ? "Continue" : 'Pay: $amountText',
             card: _charge.card,
             onValidated: _onCardValidated,
           ),
