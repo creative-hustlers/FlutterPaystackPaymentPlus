@@ -42,10 +42,8 @@ class _WebViewState extends State<WebView> {
     controller = view.WebViewController()
       ..setJavaScriptMode(view.JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.white)
-    // Updated user agent for better mobile compatibility
-      ..setUserAgent(
-          'Mozilla/5.0 (Linux; Android 12; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
-      )
+      // Updated user agent for better mobile compatibility
+      ..setUserAgent('Mozilla/5.0 (Linux; Android 12; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36')
       ..setNavigationDelegate(
         view.NavigationDelegate(
           onProgress: (int progress) {
@@ -64,10 +62,8 @@ class _WebViewState extends State<WebView> {
             });
 
             // Execute JavaScript to get response
-            controller.runJavaScriptReturningResult(
-                "document.getElementById('return')?.innerText || null")
-                .then((value) async {
-              if (value.toString().isNotEmpty && value.toString() != 'null') {
+            controller.runJavaScriptReturningResult("document.getElementById('return')?.innerText").then((value) async {
+              if (value != null && value.toString().isNotEmpty && value.toString() != 'null' && value.toString() != '"null"' && value.toString().length > 7) {
                 response = value.toString();
               }
             }).catchError((error) {
@@ -234,9 +230,7 @@ class _WebViewWidgetState extends State<WebViewWidget> {
     controller = view.WebViewController()
       ..setJavaScriptMode(view.JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.white)
-      ..setUserAgent(
-          'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36'
-      )
+      ..setUserAgent('Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36')
       ..setNavigationDelegate(
         view.NavigationDelegate(
           onPageStarted: (String url) {
@@ -253,10 +247,9 @@ class _WebViewWidgetState extends State<WebViewWidget> {
               });
             }
 
-            controller.runJavaScriptReturningResult(
-                "document.getElementById('return')?.innerText || 'null'")
-                .then((value) async {
-              if (value.toString().isNotEmpty && value.toString() != 'null') {
+            controller.runJavaScriptReturningResult("document.getElementById('return')?.innerText").then((value) async {
+
+              if (value != null && value.toString().isNotEmpty && value.toString() != 'null' && value.toString() != '"null"' && value.toString()!.length > 7) {
                 response = value.toString();
               }
             }).catchError((error) {
@@ -335,9 +328,7 @@ class _MobileWebViewState extends State<MobileWebView> {
     controller = view.WebViewController()
       ..setJavaScriptMode(view.JavaScriptMode.unrestricted)
       ..setBackgroundColor(Colors.white)
-      ..setUserAgent(
-          'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36'
-      )
+      ..setUserAgent('Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36')
       ..setNavigationDelegate(
         view.NavigationDelegate(
           onProgress: (int progress) {
@@ -357,10 +348,8 @@ class _MobileWebViewState extends State<MobileWebView> {
             });
             _updateNavigationButtons();
 
-            controller.runJavaScriptReturningResult(
-                "document.getElementById('return')?.innerText || 'null'")
-                .then((value) async {
-              if (value.toString().isNotEmpty && value.toString() != 'null') {
+            controller.runJavaScriptReturningResult("document.getElementById('return')?.innerText").then((value) async {
+              if (value != null && value.toString().isNotEmpty && value.toString() != 'null' && value.toString() != '"null"' && value.toString()!.length > 7) {
                 response = value.toString();
               }
             }).catchError((error) {
