@@ -17,5 +17,5 @@ class Strings {
   static const String sthWentWrong = 'Something went wrong.';
   static const String userTerminated = 'Transaction terminated';
   static const String unKnownResponse = 'Unknown server response';
-  static const String cardInputInstruction = 'Enter your card details for payment';
+  static const String cardInputInstruction = 'Enter your card details to pay';
 }
